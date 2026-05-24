@@ -1,57 +1,131 @@
 import psutil
 import os
+import time
 from datetime import datetime
 
-cpu = psutil.cpu_percent(interval=1)
+while True:
 
-memory = psutil.virtual_memory().percent
+    cpu = psutil.cpu_percent(interval=1)
 
-disk = psutil.disk_usage('/').percent
+    memory = psutil.virtual_memory().percent
 
-response = os.system("ping -n 1 google.com")
+    disk = psutil.disk_usage('/').percent
 
-time = datetime.now()
+    response = os.system("ping -c 1 google.com > /dev/null 2>&1")
 
-if cpu > 80:
-    print("CPU Critical:", cpu)
+    current_time = datetime.now()
 
-else:
-    print("CPU Healthy:", cpu)
-
-
-if memory > 80:
-    print("Memory Critical:", memory)
-
-else:
-    print("Memory Healthy:", memory)
-
-
-if disk > 80:
-    print("Disk Critical:", disk)
-
-else:
-    print("Disk Healthy:", disk)
-
-if response == 0:
-    print("Network Healthy")
-
-else:
-    print("Network Down")
-
-with open("monitor.log", "a") as file:
-
-    file.write(f"\nTime: {time}\n")
-
-    file.write(f"\nCPU Usage: {cpu}")
-
-    file.write(f"\nMemory Usage: {memory}")
-
-    file.write(f"\nDisk Usage: {disk}")
-
-    if response == 0:
-        file.write("\nNetwork Healthy\n")
-
+    # CPU Condition
+    if cpu > 80:
+        cpu_status = "CPU Critical"
+    elif cpu > 50:
+        cpu_status = "CPU Warning"
     else:
-        file.write("\nNetwork Down\n")
+        cpu_status = "CPU Healthy"
 
-    
+    # Memory Condition
+    if memory > 80:
+        memory_status = "Memory Critical"
+    elif memory > 50:
+        memory_status = "Memory Warning"
+    else:
+        memory_status = "Memory Healthy"
+
+    # Disk Condition
+    if disk > 80:
+        disk_status = "Disk Critical"
+    elif disk > 50:
+        disk_status = "Disk Warning"
+    else:
+        disk_status = "Disk Healthy"
+
+    # Network Condition
+    if response == 0:
+        network_status = "Network Healthy"
+    else:
+        network_status = "Network Down"
+
+    # Print Output
+    print("\n========== SERVER MONITOR ==========")
+
+    print("Time:", current_time)
+
+    print(f"CPU Usage: {cpu}% - {cpu_status}")
+
+    print(f"Memory Usage: {memory}% - {memory_status}")
+
+    print(f"Disk Usage: {disk}% - {disk_status}")
+
+    print(network_status)
+
+    print("====================================")
+
+    # Save Logs
+    with open("monitor.log", "a") as file:
+
+        file.write(f"\nimport psutil
+import os
+import time
+from datetime import datetime
+
+while True:
+
+    cpu = psutil.cpu_percent(interval=1)
+
+    memory = psutil.virtual_memory().percent
+
+    disk = psutil.disk_usage('/').percent
+
+    response = os.system("ping -c 1 google.com > /dev/null 2>&1")
+
+    current_time = datetime.now()
+
+    # CPU Condition
+    if cpu > 80:
+        cpu_status = "CPU Critical"
+    elif cpu > 50:
+        cpu_status = "CPU Warning"
+    else:
+        cpu_status = "CPU Healthy"
+
+    # Memory Condition
+    if memory > 80:
+        memory_status = "Memory Critical"
+    elif memory > 50:
+        memory_status = "Memory Warning"
+    else:
+        memory_status = "Memory Healthy"
+
+    # Disk Condition
+    if disk > 80:
+        disk_status = "Disk Critical"
+    elif disk > 50:
+        disk_status = "Disk Warning"
+    else:
+        disk_status = "Disk Healthy"
+
+    # Network Condition
+    if response == 0:
+        network_status = "Network Healthy"
+    else:
+        network_status = "Network Down"
+
+    # Print Output
+    print("\n========== SERVER MONITOR ==========")
+
+    print("Time:", current_time)
+
+    print(f"CPU Usage: {cpu}% - {cpu_status}")
+
+    print(f"Memory Usage: {memory}% - {memory_status}")
+
+    print(f"Disk Usage: {disk}% - {disk_status}")
+
+    print(network_status)
+
+    print("====================================")
+
+    # Save Logs
+    with open("monitor.log", "a") as file:
+
+        file.write(f"\n

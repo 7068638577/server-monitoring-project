@@ -1,0 +1,12 @@
+services: 
+
+  monitor:
+    build: .
+    container_name: monitor-container
+  
+
+  nginx:
+    image: nginx
+    container_name: nginx-container
+    ports:
+      - "8080:80"
